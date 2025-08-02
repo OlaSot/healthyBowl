@@ -5,19 +5,19 @@ const Gallery = () => {
   const galleryItems = [
     {
       id: 1,
-      image: "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=400",
+      image: "/baked-pumpkin-sandwich-with-dorblu-cheese-with-blue-mold-thyme-concrete-background.jpg",
       likes: 245,
       comments: 32
     },
     {
       id: 2,
-      image: "https://images.pexels.com/photos/1092730/pexels-photo-1092730.jpeg?auto=compress&cs=tinysrgb&w=400",
+      image: "/lavash.jpg",
       likes: 189,
       comments: 24
     },
     {
       id: 3,
-      image: "https://images.pexels.com/photos/1640770/pexels-photo-1640770.jpeg?auto=compress&cs=tinysrgb&w=400",
+      image: "/grilled-beef.jpg",
       likes: 312,
       comments: 45
     },
@@ -35,7 +35,7 @@ const Gallery = () => {
     },
     {
       id: 6,
-      image: "https://images.pexels.com/photos/1640774/pexels-photo-1640774.jpeg?auto=compress&cs=tinysrgb&w=400",
+      image: "/top-view.jpg",
       likes: 203,
       comments: 29
     }

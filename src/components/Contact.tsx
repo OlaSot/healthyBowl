@@ -93,13 +93,15 @@ const Contact = () => {
             </div>
 
             {/* Map Placeholder */}
-            <div className="bg-gray-200 rounded-3xl h-64 flex items-center justify-center">
-              <div className="text-center">
-                <MapPin className="w-12 h-12 text-gray-400 mx-auto mb-2" />
-                <p className="text-gray-500">Interactive Map</p>
-                <p className="text-sm text-gray-400">Click to view in Google Maps</p>
-              </div>
-            </div>
+           {/* Team Photo */}
+<div className="overflow-hidden rounded-3xl shadow-lg">
+  <img
+    src="/team.jpg" 
+    alt="Our Team"
+    className="w-full h-64 object-cover object-top hover:scale-105 transition-transform duration-500"
+  />
+</div>
+
           </div>
 
           {/* Contact Form */}

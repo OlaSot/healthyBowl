@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { Menu, X, Leaf, ShoppingBag, User } from 'lucide-react';
-import { useCart } from '../context/CartContext';
-import CartDropdown from './CartDropdown';
+import React, { useState, useEffect, useRef } from "react";
+import { Menu, X, Leaf, ShoppingBag, User } from "lucide-react";
+import { useCart } from "../context/CartContext";
+import CartDropdown from "./CartDropdown";
 
 interface NavigationProps {
   onCartClick: () => void;
@@ -10,41 +10,62 @@ interface NavigationProps {
 const Navigation: React.FC<NavigationProps> = ({ onCartClick }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const { state, toggleCart, closeCart, getTotalItems } = useCart();
+  const { state, toggleCart, getTotalItems, closeCart } = useCart();
 
+  const cartRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const handleOutsideClick = (event: MouseEvent) => {
+      if (
+        state.isOpen &&
+        cartRef.current &&
+        !cartRef.current.contains(event.target as Node)
+      ) {
+        closeCart();
+      }
+    };
+
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => document.removeEventListener("mousedown", handleOutsideClick);
+  }, [state.isOpen, closeCart]);
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const navItems = [
-    { name: 'Menu', href: '#menu' },
-    { name: 'About', href: '#about' },
-    { name: 'Gallery', href: '#gallery' },
-    { name: 'Contact', href: '#contact' }
+    { name: "Menu", href: "#menu" },
+    { name: "About", href: "#about" },
+    { name: "Gallery", href: "#gallery" },
+    { name: "Contact", href: "#contact" },
   ];
 
   return (
-    <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-      isScrolled 
-        ? 'bg-white/95 backdrop-blur-sm shadow-lg' 
-        : 'bg-transparent'
-    }`}>
+    <nav
+      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+        isScrolled ? "bg-white/95 backdrop-blur-sm shadow-lg" : "bg-transparent"
+      }`}
+    >
       <div className="container mx-auto px-6">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
+          
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-green-400 to-green-500 rounded-2xl flex items-center justify-center">
-              <Leaf className="w-5 h-5 text-white" />
+            
+            <div className="w-40 h-10 bg-gradient-to-brrounded-2xl flex items-center justify-center">
+              <img src="/Logo.png" alt="" />
+
             </div>
             <div>
-              <h1 className={`text-xl font-bold transition-colors duration-300 ${
-                isScrolled ? 'text-gray-800' : 'text-white'
-              }`}>
+              
+              <h1
+                className={`text-xl font-bold transition-colors duration-300 ${
+                  isScrolled ? "text-gray-800" : "text-gray-800"
+                }`}
+              >
                 Healthy Bowl
               </h1>
             </div>
@@ -57,7 +78,7 @@ const Navigation: React.FC<NavigationProps> = ({ onCartClick }) => {
                 key={item.name}
                 href={item.href}
                 className={`font-medium transition-colors duration-300 hover:text-green-500 ${
-                  isScrolled ? 'text-gray-700' : 'text-white'
+                  isScrolled ? "text-gray-700" : "text-gray-800"
                 }`}
               >
                 {item.name}
@@ -67,20 +88,22 @@ const Navigation: React.FC<NavigationProps> = ({ onCartClick }) => {
 
           {/* Action Buttons */}
           <div className="hidden md:flex items-center gap-4">
-            <button className={`p-2 rounded-full transition-colors duration-300 ${
-              isScrolled 
-                ? 'text-gray-700 hover:bg-gray-100' 
-                : 'text-white hover:bg-white/10'
-            }`}>
+            <button
+              className={`p-2 rounded-full transition-colors duration-300 ${
+                isScrolled
+                  ? "text-gray-700 hover:bg-gray-100"
+                  : "text-gray-800 hover:bg-white/10"
+              }`}
+            >
               <User className="w-5 h-5" />
             </button>
-            <div className="relative">
-              <button 
+            <div className="relative" ref={cartRef}>
+              <button
                 onClick={toggleCart}
                 className={`p-2 rounded-full transition-colors duration-300 relative ${
-                  isScrolled 
-                    ? 'text-gray-700 hover:bg-gray-100' 
-                    : 'text-white hover:bg-white/10'
+                  isScrolled
+                    ? "text-gray-700 hover:bg-gray-100"
+                    : "text-gray-800 hover:bg-white/10"
                 }`}
               >
                 <ShoppingBag className="w-5 h-5" />
@@ -92,19 +115,7 @@ const Navigation: React.FC<NavigationProps> = ({ onCartClick }) => {
               </button>
               <CartDropdown isOpen={state.isOpen} onCheckout={onCartClick} />
             </div>
-            <button 
-              onClick={() => {
-                closeCart();
-                onCartClick();
-              }}
-              className={`p-2 rounded-full transition-colors duration-300 ${
-              isScrolled 
-                ? 'text-gray-700 hover:bg-gray-100' 
-                : 'text-white hover:bg-white/10'
-            }`}
-            >
-              <ShoppingBag className="w-5 h-5" />
-            </button>
+
             <button className="bg-gradient-to-r from-green-500 to-green-600 text-white px-6 py-2 rounded-full font-semibold hover:shadow-lg transition-all duration-300 hover:scale-105">
               Order Now
             </button>
@@ -114,9 +125,9 @@ const Navigation: React.FC<NavigationProps> = ({ onCartClick }) => {
           <button
             onClick={() => setIsOpen(!isOpen)}
             className={`md:hidden p-2 rounded-full transition-colors duration-300 ${
-              isScrolled 
-                ? 'text-gray-700 hover:bg-gray-100' 
-                : 'text-white hover:bg-white/10'
+              isScrolled
+                ? "text-gray-700 hover:bg-gray-100"
+                : "text-white hover:bg-white/10"
             }`}
           >
             {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -143,7 +154,7 @@ const Navigation: React.FC<NavigationProps> = ({ onCartClick }) => {
                 <button className="flex-1 bg-gradient-to-r from-green-500 to-green-600 text-white py-3 rounded-full font-semibold">
                   Order Now
                 </button>
-                <button 
+                <button
                   onClick={() => {
                     setIsOpen(false);
                     onCartClick();

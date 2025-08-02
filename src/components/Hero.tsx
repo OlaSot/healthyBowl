@@ -50,7 +50,7 @@ const Hero = () => {
           <div className="relative">
             <div className="relative z-10 bg-white rounded-3xl shadow-2xl overflow-hidden transform hover:scale-105 transition-transform duration-500">
               <img 
-                src="https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=800"
+                src="/bidha2.png"
                 alt="Healthy Bowl Signature Dish"
                 className="w-full h-96 object-cover"
               />
