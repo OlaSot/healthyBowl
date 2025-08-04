@@ -55,10 +55,10 @@ const Navigation: React.FC<NavigationProps> = ({ onCartClick }) => {
           
           <div className="flex items-center gap-3">
             
-            <div className="w-40 h-10 bg-gradient-to-brrounded-2xl flex items-center justify-center">
-              <img src="/Logo.png" alt="" />
+<div className="w-12 h-10 bg-gradient-to-brrounded-2xl flex items-center justify-center">
+  <img src="/Logo.png" alt="" />
+</div>
 
-            </div>
             <div>
               
               <h1
